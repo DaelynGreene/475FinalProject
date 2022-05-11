@@ -1,10 +1,12 @@
 ui <- dashboardPage(
-  dashboardHeader(title = "Daelyn 475 Midterm"),
+  dashboardHeader(title = "Daelyn 475 Final"),
   dashboardSidebar(
     sidebarMenu(
       menuItem("How to Use", tabName = "Tab1"),
-      menuItem("Now You Try", tabName = "Tab2"),
-      menuItem("Interpretations", tabName = "Tab3")
+      menuItem("Now You Try - Graph Viewing", tabName = "Tab2"),
+      menuItem("Interpretations - Graph Viewing", tabName = "Tab3"),
+      menuItem("Now You Try - Forecasts", tabName = "Tab4"),
+      menuItem("Interpretations - Forecasts", tabName = "Tab5")
     )
   ),
   dashboardBody(
@@ -67,7 +69,37 @@ ui <- dashboardPage(
         
         plotlyOutput("TutorialDecomp"),
         
-        h3("Once you have gotten to this point, you are done with learning the app. You can now go over to the Interpretations tab to learn how to understand what you are seeing, OR, if you want to be adventurous, jump right into the Now You Try tab.")
+        h3("Once you have gotten to this point, you are done with learning the first part of the app. You can now go over to the Interpretations - Graph Viewing tab to learn how to understand what you have seen, OR, if you want to be adventurous, jump right into the Now You Try - Graph Viewing tab."),
+        
+        br(),
+        
+        br(),
+        
+        h3("The second part of the app has to do with forecasting the future search interest. The user will select which model they want to use to model their data and create the forecast from."),
+        
+        br(),
+        
+        prettyRadioButtons(
+          inputId = "EXAMPLE4",
+          label = "What model do you want to use to forecast the future of your search term?", 
+          choices = c("Naive", "Seasonal Naive", "Mean", "Drift", "Holts", "Holts/Winters", "ARIMA"),
+          icon = icon("check"), 
+          bigger = TRUE,
+          inline = T,
+          animation = "tada",
+          selected = ""
+        ),
+        
+        br(),
+        
+        h3("The graph will be displayed based on the user's selection. The model will be in blue, the original data will be in black. This is the graph of the Naive model."),
+        
+        plotOutput("TutOut"),
+        
+        br(),
+        
+        h3("Now that you have made it here, you are finished with the app. Head over to Interpretations - Forecast to see how to understand the forecast graph or go to Now You Try - Forecasts to try out your own search.")
+        
         
       ),
       
@@ -89,8 +121,6 @@ ui <- dashboardPage(
         
         actionButton("Go","Go"),
         
-        h5("NOTE: There is an issue somewhere in my code that I cannot find for the life of me. If decomposition is selected you need to scroll down a good bit to see it. If autocorrelation is selected, you need to scroll down some to see it."),
-        
         br(),
         
         br(),
@@ -100,9 +130,6 @@ ui <- dashboardPage(
         br(),
         
         uiOutput("Selected")
-        
-        
-        
         
       ),
       
@@ -119,18 +146,71 @@ ui <- dashboardPage(
         br(),
         h3("The decomposition graph, while scary looking at first, really isn't that bad. The graph at the top is the initial full series. The next graph is a graph of the trend. The next is a graph of the seasonal component of the initial series. The last is a graph of the remainder (that is, the things that are just by random chance)."),
         h3("The way to tell which is the most impactful is to look at the scale of the y axis. The item with the largest scale is the most impactful. If two (or all three) have the same scale, you then need to look at the little rectangles. The rectangle that covers the largest amount is the most impactful.")
+      ),
+      
+      
+      tabItem(
+        tabName = "Tab4",
         
+        textInput("SearchKeyword2","What do you want to search for?",placeholder = ""),
         
+        prettyRadioButtons(
+          inputId = "ForecastChoice",
+          label = "What model do you want to use to forecast the future of your search term?", 
+          choices = c("Naive", "Seasonal Naive", "Mean", "Drift", "Holts", "Holts/Winters", "ARIMA"),
+          icon = icon("check"), 
+          bigger = TRUE,
+          inline = T,
+          animation = "tada",
+          selected = ""
+        ),
         
+        actionButton("Go2","Go"),
         
+        br(),
         
+        plotlyOutput("UserMade2"),
         
+        br(),
         
+        plotOutput("ForecastOutput")
         
+      ),
+      
+      
+      tabItem(
+        tabName = "Tab5",
+        
+        h3("The forecast graph is fairly self-explanatory. Depending on which option is selected, a model is generated. The forecast for the next year of trends is created and graphed along with the original data."),
+        
+        br(),
+        
+        h3("The shaded band around the forecast describes the level of confidence of the prediction. The 80% band means that we are 80% confident that the true value of our data falls in that range. The 95% band is the exact same, just with 95% confident instead of 80%.")
+    
       )
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
     ))
-  
-  
-  
-  
 )

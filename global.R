@@ -7,8 +7,8 @@ library(fpp3)
 library(lubridate)
 library(gtrendsR)
 
-StockInfo <- gtrends(keyword = "Lindsey Stirling", time = "all")
-g_trends <- as.data.frame(StockInfo$interest_over_time)
+DefaultInfo <- gtrends(keyword = "Lindsey Stirling", time = "all")
+g_trends <- as.data.frame(DefaultInfo$interest_over_time)
 g_trends$keyword <- NULL
 g_trends$geo <- NULL
 g_trends$time <- NULL
